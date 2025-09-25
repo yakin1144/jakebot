@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JakeBot - Apple of Fortune Game">
+    <meta name="theme-color" content="#0a2e1f">
+    <title>JakeBot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        :root {
+            --casino-dark: #0a2e1f;
+            --casino-gold: #d4af37;
+            --casino-red: #c62828;
+            --casino-green: #2e7d32;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--casino-dark), #0d3b2a);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-image: url('https://iili.io/KajFavR.md.jpg');
+            background-size: cover;
+            background-position: center;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 550px;
+            background: rgba(10, 46, 31, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            margin: 20px 0;
+            border: 2px solid var(--casino-gold);
+            position: relative;
+        }
+        
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--casino-gold), var(--casino-red), var(--casino-gold));
+        }
+        
+        .logo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--casino-green), var(--casino-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 4px solid var(--casino-gold);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+            position: relative;
+        }
+        
+        .logo::after {
+            content: "";
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 2px solid rgba(212, 175, 55, 0.4);
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 5px;
+            color: var(--casino-gold);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: #ccc;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .social-links a {
+            color: var(--casino-gold);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            border-radius: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .social-links a:hover {
+            color: black;
+            background-color: var(--casino-gold);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+        
+        .form-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1rem;
+            color: var(--casino-gold);
+            font-weight: 600;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            font-size: 1rem;
+            text-align: left;
+            transition: all 0.3s;
+            color: white;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--casino-gold);
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.3);
+        }
+        
+        input:read-only {
+            background: rgba(0, 0, 0, 0.7);
+            color: #aaa;
+        }
+        
+        button {
+            background: linear-gradient(to right, var(--casino-green), var(--casino-dark));
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 8px 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            overflow: hidden;
+            min-height: 50px;
+        }
+        
+        button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        button:hover::before {
+            left: 100%;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(to right, #5d4037, #3e2723);
+        }
+        
+        .btn-accent {
+            background: linear-gradient(to right, var(--casino-red), #b71c1c);
+        }
+        
+        .btn-gold {
+            background: linear-gradient(to right, var(--casino-gold), #b8941f);
+            color: #333;
+        }
+        
+        .error-message {
+            color: #ff6b6b;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(198, 40, 40, 0.2);
+            display: none;
+            font-weight: 600;
+            border: 1px solid rgba(198, 40, 40, 0.5);
+        }
+        
+        #game-screen {
+            display: none;
+        }
+        
+        .game-title {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: var(--casino-gold);
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+        
+        .game-title::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(to right, var(--casino-gold), var(--casino-red), var(--casino-gold));
+            border-radius: 2px;
+        }
+        
+        .game-container {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            min-height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .game-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.7) 100%);
+            pointer-events: none;
+        }
+        
+        .game-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .apple {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            position: relative;
+            border: 2px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s;
+            overflow: hidden;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        
+        .apple.visible {
+            opacity: 1;
+            transform: scale(1);
+            transition: all 0.5s ease-in-out;
+        }
+        
+        .apple::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            border: 2px solid rgba(212, 175, 55, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .apple:hover {
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+        }
+        
+        .apple:hover::before {
+            opacity: 1;
+        }
+        
+        .normal-apple {
+            background: #e74c3c url('https://i.postimg.cc/ZByqsY5m/apple-red.png') center/cover no-repeat;
+        }
+        
+        .eaten-apple {
+            background: #7f8c8d url('https://i.postimg.cc/FkyHmPSn/apple-grey.png') center/cover no-repeat;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .apple-glow {
+            animation: appleGlow 2s infinite;
+        }
+        
+        .game-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .user-id {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            color: var(--casino-gold);
+            background: rgba(0, 0, 0, 0.4);
+            padding: 8px 20px;
+            border-radius: 30px;
+            display: inline-block;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .start-message {
+            font-size: 1.3rem;
+            color: var(--casino-gold);
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        /* Apple of fortune */
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, var(--casino-green), var(--casino-gold));
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        .level-indicator {
+            font-size: 1.1rem;
+            color: var(--casino-gold);
+            margin-bottom: 10px;
+        }
+        
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--casino-gold);
+            animation: spin 1s linear infinite;
+        }
+        
+        .loading-text {
+            margin-top: 15px;
+            color: var(--casino-gold);
+            font-size: 1.2rem;
+        }
+        
+        .install-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--casino-gold);
+            color: #333;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .logo {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .apple {
+                width: 55px;
+                height: 55px;
+            }
+            
+            .game-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            button {
+                width: 100%;
+                margin: 5px 0;
+            }
+            
+            .install-btn {
+                bottom: 10px;
+                right: 10px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+        }
+        
+        /* Animation effects */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        /* Apple effects */
+        @keyframes appleGlow {
+            0% { box-shadow: 0 0 5px rgba(212, 175, 55, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.9); }
+            100% { box-shadow: 0 0 5px rgba(212, 175, 55, 0.5); }
+        }
+        
+        /* Apple reveal effect */
+        @keyframes appleReveal {
+            0% { opacity: 0; transform: scale(0.5) rotate(-180deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+        
+        .apple-reveal {
+            animation: appleReveal 0.6s ease-out forwards;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Install Button -->
+    <button id="installBtn" class="install-btn" title="Install App">
+        <i class="fas fa-download"></i>
+    </button>
+    
+    <!-- Loading Screen -->
+    <div id="loading" class="loading">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading...</div>
+    </div>
+    
+    <!-- Login Screen -->
+    <div id="login-screen" class="container fade-in">
+        <div class="logo">
+            <img src="https://i.postimg.cc/hzJhjzTR/logo.jpg" alt="JakeBot Logo">
+        </div>
+        
+        <h1>JakeBot</h1>
+        <p class="subtitle">Exclusive System</p>
+        
+        <div class="social-links">
+            <a href="https://t.me/jakebot_officiel" target="_blank">
+                <i class="fab fa-telegram"></i> Telegram
+            </a>
+            <a href="https://instagram.com/jakebot__officiel" target="_blank">
+                <i class="fab fa-instagram"></i> Instagram
+            </a>
+        </div>
+        
+        <div class="form-container">
+            <div class="form-group">
+                <label for="user-id"><i class="fas fa-id-card"></i> ID (10 digits)</label>
+                <input type="text" id="user-id" maxlength="10" placeholder="Enter 10-digit ID">
+            </div>
+            
+            <div class="form-group">
+                <label for="user-key"><i class="fas fa-key"></i> Key</label>
+                <input type="password" id="user-key" placeholder="Enter Key to login">
+            </div>
+            
+            <div class="form-group">
+                <label for="instagram"><i class="fab fa-instagram"></i> Instagram</label>
+                <input type="text" id="instagram" value="@jakebot__officiel" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label for="telegram"><i class="fab fa-telegram"></i> Telegram</label>
+                <input type="text" id="telegram" value="@jakebot_officiel" readonly>
+            </div>
+        </div>
+        
+        <button id="login-btn" class="btn-gold">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+        <div id="error-message" class="error-message">
+            <i class="fas fa-exclamation-circle"></i> Invalid login data!
+        </div>
+    </div>
+    
+    <!-- Game Screen -->
+    <div id="game-screen" class="container">
+        <h1 class="game-title">JakeBot</h1>
+        
+        <div class="level-indicator">
+            <i class="fas fa-chart-line"></i> Level: <span id="current-level">1</span>/10
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress" id="game-progress" style="width: 10%;"></div>
+        </div>
+        
+        <div id="start-message" class="start-message">
+            <i class="fas fa-play-circle"></i> Press "Play" button to start the game
+        </div>
+        
+        <div class="game-container">
+            <div class="game-row" id="current-row">
+                <!-- Current row of apples will be displayed here -->
+            </div>
+        </div>
+        
+        <div class="game-controls">
+            <button id="prev-btn" class="btn-secondary">
+                <i class="fas fa-arrow-left"></i> Previous
+            </button>
+            <button id="play-btn" class="btn-accent">
+                <i class="fas fa-play"></i> Play
+            </button>
+            <button id="next-btn">
+                Next <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+        
+        <div class="user-id" id="display-user-id">
+            <i class="fas fa-user"></i> ID: 
+        </div>
+    </div>
+
+    <script>
+        // App data - Key
+        const validKeys = ["raid"];
+        
+        // DOM elements
+        const loginScreen = document.getElementById('login-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const loginBtn = document.getElementById('login-btn');
+        const errorMessage = document.getElementById('error-message');
+        const playBtn = document.getElementById('play-btn');
+        const currentRow = document.getElementById('current-row');
+        const displayUserId = document.getElementById('display-user-id');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const startMessage = document.getElementById('start-message');
+        const loadingScreen = document.getElementById('loading');
+        const currentLevel = document.getElementById('current-level');
+        const gameProgress = document.getElementById('game-progress');
+        const installBtn = document.getElementById('installBtn');
+        
+        // Game state
+        let currentRowIndex = 0;
+        let applesState = [];
+        let gameStarted = false;
+        let deferredPrompt;
+        
+        // Number of eaten apples per row
+        const eatenApplesPerRow = [1, 1, 1, 1, 2, 2, 2, 3, 3, 4];
+        
+        // Initialize game
+        function initGame() {
+            applesState = [];
+            gameStarted = false;
+            currentRowIndex = 0;
+            updateProgressBar();
+            
+            // Create apple states for all rows (10 rows)
+            for (let row = 0; row < 10; row++) {
+                const eatenCount = eatenApplesPerRow[row];
+                const rowState = Array(5).fill(false);
+                
+                // Choose random positions for eaten apples
+                const eatenPositions = [];
+                while (eatenPositions.length < eatenCount) {
+                    const randomPos = Math.floor(Math.random() * 5);
+                    if (!eatenPositions.includes(randomPos)) {
+                        eatenPositions.push(randomPos);
+                        rowState[randomPos] = true;
+                    }
+                }
+                
+                applesState.push(rowState);
+            }
+            
+            // Hide apples and show start message
+            displayStartMessage();
+        }
+        
+        // Update progress bar
+        function updateProgressBar() {
+            const progress = ((currentRowIndex + 1) / 10) * 100;
+            gameProgress.style.width = `${progress}%`;
+            currentLevel.textContent = currentRowIndex + 1;
+        }
+        
+        // Display start message
+        function displayStartMessage() {
+            currentRow.innerHTML = '';
+            startMessage.style.display = 'block';
+            
+            // Hide navigation buttons until game starts
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            
+            // Change play button text
+            playBtn.innerHTML = '<i class="fas fa-play"></i> Play';
+        }
+        
+        // Start game and display apples
+        function startGame() {
+            gameStarted = true;
+            startMessage.style.display = 'none';
+            
+            // Show navigation buttons
+            prevBtn.style.display = 'inline-flex';
+            nextBtn.style.display = 'inline-flex';
+            
+            // Change play button text
+            playBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Restart';
+            
+            // Start from first row
+            currentRowIndex = 0;
+            displayCurrentRow();
+        }
+        
+        // Display current row
+        function displayCurrentRow() {
+            currentRow.innerHTML = '';
+            const rowState = applesState[currentRowIndex];
+            
+            // Update progress bar
+            updateProgressBar();
+            
+            // Create apples for current row
+            for (let col = 0; col < 5; col++) {
+                const apple = document.createElement('div');
+                apple.className = `apple ${rowState[col] ? 'eaten-apple' : 'normal-apple'}`;
+                
+                // Add glow effect for normal apples
+                if (!rowState[col]) {
+                    apple.classList.add('apple-glow');
+                }
+                
+                // Add reveal effect
+                setTimeout(() => {
+                    apple.classList.add('apple-reveal');
+                }, col * 100);
+                
+                currentRow.appendChild(apple);
+            }
+            
+            // Update button states
+            prevBtn.disabled = currentRowIndex === 0;
+            nextBtn.disabled = currentRowIndex === 9;
+        }
+        
+        // Restart game
+        function restartGame() {
+            initGame();
+            startGame();
+        }
+        
+        // Show loading screen
+        function showLoading() {
+            loadingScreen.style.display = 'flex';
+        }
+        
+        // Hide loading screen
+        function hideLoading() {
+            loadingScreen.style.display = 'none';
+        }
+        
+        // Validate login data
+        function validateLogin() {
+            const userId = document.getElementById('user-id').value;
+            const userKey = document.getElementById('user-key').value;
+            
+            // Check if ID consists of 10 digits only
+            if (!/^\d{10}$/.test(userId)) {
+                return false;
+            }
+            
+            // Check if Key is valid
+            if (userKey !== validKeys[0]) {
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Handle login event
+        loginBtn.addEventListener('click', function() {
+            if (validateLogin()) {
+                showLoading();
+                
+                // Simulate loading process
+                setTimeout(() => {
+                    // Hide login screen and show game screen
+                    loginScreen.style.display = 'none';
+                    gameScreen.style.display = 'block';
+                    
+                    // Display user ID
+                    const userId = document.getElementById('user-id').value;
+                    displayUserId.textContent = `ID: ${userId}`;
+                    
+                    // Initialize game
+                    initGame();
+                    
+                    hideLoading();
+                }, 1500);
+            } else {
+                errorMessage.style.display = 'block';
+                // Hide message after 3 seconds
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000);
+            }
+        });
+        
+        // Handle play event
+        playBtn.addEventListener('click', function() {
+            if (!gameStarted) {
+                startGame();
+            } else {
+                restartGame();
+            }
+        });
+        
+        // Handle next button event
+        nextBtn.addEventListener('click', function() {
+            if (currentRowIndex < 9) {
+                currentRowIndex++;
+                displayCurrentRow();
+            }
+        });
+        
+        // Handle previous button event
+        prevBtn.addEventListener('click', function() {
+            if (currentRowIndex > 0) {
+                currentRowIndex--;
+                displayCurrentRow();
+            }
+        });
+        
+        // Allow login when pressing Enter in any field
+        document.getElementById('user-key').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loginBtn.click();
+            }
+        });
+        
+        document.getElementById('user-id').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loginBtn.click();
+            }
+        });
+        
+        // PWA - Service Worker for the app
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('Service Worker registered successfully:', registration);
+                    })
+                    .catch((error) => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+        
+        // PWA - Install Prompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent browser from showing automatic install prompt
+            e.preventDefault();
+            // Save event for later use
+            deferredPrompt = e;
+            // Show install button
+            installBtn.style.display = 'flex';
+        });
+        
+        // Handle install button event
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                // Show install prompt
+                deferredPrompt.prompt();
+                // Wait for user choice
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                    // Hide install button after installation
+                    installBtn.style.display = 'none';
+                }
+                // Clear variable after use
+                deferredPrompt = null;
+            }
+        });
+        
+        // PWA - After installation
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            installBtn.style.display = 'none';
+            deferredPrompt = null;
+        });
+        
+        // Add effects on load
+        window.addEventListener('load', function() {
+            document.body.classList.add('fade-in');
+        });
+    </script>
+</body>
+</html>
