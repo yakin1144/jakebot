@@ -1,0 +1,15 @@
+# Enable rewrite engine
+RewriteEngine On
+
+# API Routes
+RewriteRule ^api/predict/([0-9]+)/([0-9]+)$ api/index.php?action=predict&userId=$1&level=$2 [L,QSA]
+RewriteRule ^api/predict/([0-9]+)$ api/index.php?action=predict&userId=$1 [L,QSA]
+RewriteRule ^api/verify$ api/index.php?action=verify [L]
+RewriteRule ^api/report$ api/index.php?action=report [L]
+RewriteRule ^api/all/([0-9]+)$ api/index.php?action=all&userId=$1 [L,QSA]
+RewriteRule ^api/stats$ api/index.php?action=stats [L]
+
+# CORS headers
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+Header set Access-Control-Allow-Headers "Authorization, Content-Type"
