@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JakeBot - Apple of Fortune Predictor">
+    <meta name="theme-color" content="#0a2e1f">
+    <title>JakeBot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        :root {
+            --casino-dark: #0a2e1f;
+            --casino-gold: #d4af37;
+            --casino-red: #c62828;
+            --casino-green: #2e7d32;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--casino-dark), #0d3b2a);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: url('https://iili.io/KajFavR.md.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 550px;
+            margin: 20px auto;
+            background: rgba(10, 46, 31, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            border: 2px solid var(--casino-gold);
+            position: relative;
+        }
+        
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--casino-gold), var(--casino-red), var(--casino-gold));
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--casino-green), var(--casino-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 4px solid var(--casino-gold);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            color: var(--casino-gold);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            margin-bottom: 25px;
+            color: #ccc;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .social-links a {
+            color: var(--casino-gold);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            border-radius: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .social-links a:hover {
+            color: black;
+            background-color: var(--casino-gold);
+        }
+        
+        .form-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--casino-gold);
+            font-weight: 600;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            font-size: 1rem;
+            color: white;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--casino-gold);
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.3);
+        }
+        
+        button {
+            background: linear-gradient(to right, var(--casino-green), var(--casino-dark));
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 8px 5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-gold {
+            background: linear-gradient(to right, var(--casino-gold), #b8941f);
+            color: #333;
+        }
+        
+        .error-message {
+            color: #ff6b6b;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(198, 40, 40, 0.2);
+            display: none;
+            font-weight: 600;
+        }
+        
+        #game-screen {
+            display: none;
+        }
+        
+        .game-title {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--casino-gold);
+        }
+        
+        .game-container {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            min-height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .game-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .apple {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            position: relative;
+            border: 2px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        /* YOUR GOOD APPLE IMAGE */
+        .normal-apple {
+            background: #e74c3c url('https://i.postimg.cc/q73crGwz/IMG-3118.png') center/cover no-repeat;
+        }
+        
+        /* YOUR ROTTEN APPLE IMAGE */
+        .eaten-apple {
+            background: #7f8c8d url('https://i.postimg.cc/FsC0J6nP/IMG-3120.png') center/cover no-repeat;
+        }
+        
+        .apple-number {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 25px;
+            height: 25px;
+            background: var(--casino-gold);
+            color: #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            border: 2px solid white;
+            z-index: 2;
+        }
+        
+        .apple-glow {
+            animation: appleGlow 2s infinite;
+        }
+        
+        .game-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .user-id {
+            margin-top: 15px;
+            font-size: 1rem;
+            color: var(--casino-gold);
+            background: rgba(0, 0, 0, 0.4);
+            padding: 8px 20px;
+            border-radius: 30px;
+            display: inline-block;
+        }
+        
+        .start-message {
+            font-size: 1.2rem;
+            color: var(--casino-gold);
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, var(--casino-green), var(--casino-gold));
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        .level-indicator {
+            font-size: 1rem;
+            color: var(--casino-gold);
+            margin-bottom: 10px;
+        }
+        
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 5px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--casino-gold);
+            animation: spin 1s linear infinite;
+        }
+        
+        .loading-text {
+            margin-top: 15px;
+            color: var(--casino-gold);
+            font-size: 1.2rem;
+        }
+        
+        .jakebot-prediction {
+            border: 3px solid #00ff00 !important;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.7) !important;
+            animation: predictionGlow 2s infinite;
+        }
+        
+        .api-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            color: white;
+        }
+        
+        @keyframes appleGlow {
+            0% { box-shadow: 0 0 10px rgba(231, 76, 60, 0.7); }
+            50% { box-shadow: 0 0 25px rgba(231, 76, 60, 0.9); }
+            100% { box-shadow: 0 0 10px rgba(231, 76, 60, 0.7); }
+        }
+        
+        @keyframes predictionGlow {
+            0% { box-shadow: 0 0 5px rgba(0, 255, 0, 0.7); }
+            50% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.9); }
+            100% { box-shadow: 0 0 5px rgba(0, 255, 0, 0.7); }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            h1 { font-size: 2rem; }
+            .apple { width: 65px; height: 65px; }
+            .game-controls { flex-direction: column; gap: 10px; }
+            button { width: 100%; margin: 5px 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading" class="loading">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading...</div>
+    </div>
+    
+    <!-- Login Screen -->
+    <div id="login-screen" class="container">
+        <div class="logo">
+            <img src="https://i.postimg.cc/hzJhjzTR/logo.jpg" alt="JakeBot Logo">
+        </div>
+        
+        <h1>JakeBot</h1>
+        <p class="subtitle">Apple of Fortune Predictor</p>
+        
+        <div class="social-links">
+            <a href="https://t.me/jakebot_officiel" target="_blank">
+                <i class="fab fa-telegram"></i> Telegram
+            </a>
+            <a href="https://instagram.com/jakedz_officiel" target="_blank">
+                <i class="fab fa-instagram"></i> Instagram
+            </a>
+        </div>
+        
+        <div class="form-container">
+            <div class="form-group">
+                <label for="user-id"><i class="fas fa-id-card"></i> ID (10 digits)</label>
+                <input type="text" id="user-id" maxlength="10" placeholder="Enter 10-digit ID">
+            </div>
+            
+            <div class="form-group">
+                <label for="user-key"><i class="fas fa-key"></i> Key</label>
+                <input type="password" id="user-key" placeholder="Enter Key to login">
+            </div>
+            
+            <div class="form-group">
+                <label for="instagram"><i class="fab fa-instagram"></i> Instagram</label>
+                <input type="text" id="instagram" value="@jakedz_officiel" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label for="telegram"><i class="fab fa-telegram"></i> Telegram</label>
+                <input type="text" id="telegram" value="@jakebot_officiel" readonly>
+            </div>
+        </div>
+        
+        <button id="login-btn" class="btn-gold">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+        <div id="error-message" class="error-message">
+            <i class="fas fa-exclamation-circle"></i> Invalid login data!
+        </div>
+    </div>
+    
+    <!-- Game Screen -->
+    <div id="game-screen" class="container">
+        <h1 class="game-title">JakeBot Predictions</h1>
+        
+        <!-- API Info Display -->
+        <div id="api-info" class="api-info" style="display: none;">
+            <h3><i class="fas fa-bolt"></i> Live Predictions</h3>
+            <p id="api-status">Loading predictions...</p>
+        </div>
+        
+        <div class="level-indicator">
+            <i class="fas fa-chart-line"></i> Level: <span id="current-level">1</span>/10
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress" id="game-progress" style="width: 10%;"></div>
+        </div>
+        
+        <div id="start-message" class="start-message">
+            <i class="fas fa-play-circle"></i> Press "Play" to start
+        </div>
+        
+        <div class="game-container">
+            <div class="game-row" id="current-row">
+                <!-- Apples will appear here -->
+            </div>
+        </div>
+        
+        <div class="game-controls">
+            <button id="prev-btn" style="background: #5d4037;">
+                <i class="fas fa-arrow-left"></i> Previous
+            </button>
+            <button id="play-btn" style="background: #c62828;">
+                <i class="fas fa-play"></i> Play
+            </button>
+            <button id="next-btn">
+                Next <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+        
+        <div class="user-id" id="display-user-id">
+            <i class="fas fa-user"></i> ID: 
+        </div>
+
+        <!-- Prediction display -->
+        <div id="jakebot-prediction" style="display: none; margin-top: 15px; padding: 10px; background: rgba(0, 255, 0, 0.1); border-radius: 8px; border: 1px solid #00ff00;">
+            <i class="fas fa-robot" style="color: #00ff00;"></i>
+            <span id="prediction-text" style="color: #00ff00; font-weight: bold;">JakeBot Predictions Ready</span>
+        </div>
+
+        <!-- Copy Predictions Button -->
+        <button id="copy-predictions-btn" class="btn-gold" style="margin-top: 15px; width: 100%;">
+            <i class="fas fa-copy"></i> Copy Predictions to Clipboard
+        </button>
+        
+        <!-- Instructions -->
+        <div style="margin-top: 20px; padding: 15px; background: rgba(212, 175, 55, 0.1); border-radius: 10px; border: 1px solid var(--casino-gold);">
+            <h3><i class="fas fa-mobile-alt"></i> How to Use:</h3>
+            <p style="margin: 10px 0; font-size: 0.9rem;">
+                1. <strong>Login</strong> with your User ID<br>
+                2. <strong>Copy predictions</strong> above<br>
+                3. <strong>Open gambling app</strong><br>
+                4. <strong>Use same User ID</strong><br>
+                5. <strong>Click apples</strong> shown in predictions<br>
+                6. <strong>WIN every level!</strong> 🎉
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // App data - Key
+        const validKeys = ["raid"];
+        
+        // DOM elements
+        const loginScreen = document.getElementById('login-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const loginBtn = document.getElementById('login-btn');
+        const errorMessage = document.getElementById('error-message');
+        const playBtn = document.getElementById('play-btn');
+        const currentRow = document.getElementById('current-row');
+        const displayUserId = document.getElementById('display-user-id');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const startMessage = document.getElementById('start-message');
+        const loadingScreen = document.getElementById('loading');
+        const currentLevel = document.getElementById('current-level');
+        const gameProgress = document.getElementById('game-progress');
+        const copyPredictionsBtn = document.getElementById('copy-predictions-btn');
+        const apiInfo = document.getElementById('api-info');
+        const apiStatus = document.getElementById('api-status');
+        
+        // Game state
+        let currentRowIndex = 0;
+        let applesState = [];
+        let gameStarted = false;
+        let jakeBotPredictions = [];
+        let currentUserId = '';
+
+        // 🎯 JAKEBOT PREDICTION ALGORITHM
+        function generateJakeBotPrediction(userId, level) {
+            const rottenCounts = [1, 1, 1, 1, 2, 2, 2, 3, 3, 4];
+            const rottenApples = rottenCounts[level - 1] || 1;
+            
+            const userNum = parseInt(userId.replace(/\D/g, '').slice(-6)) || 0;
+            const uniqueSeed = userNum + level;
+            const deterministicRandom = seededRandom(uniqueSeed);
+            
+            const positions = [0, 1, 2, 3, 4];
+            const rottenPositions = [];
+            
+            while (rottenPositions.length < rottenApples) {
+                const pos = Math.floor(deterministicRandom() * 5);
+                if (!rottenPositions.includes(pos)) {
+                    rottenPositions.push(pos);
+                }
+            }
+            
+            const safeApples = positions.filter(p => !rottenPositions.includes(p));
+            return safeApples;
+        }
+
+        function seededRandom(seed) {
+            return function() {
+                seed = (seed * 9301 + 49297) % 233280;
+                return seed / 233280;
+            };
+        }
+
+        // 🎯 GENERATE ALL PREDICTIONS
+        async function generateAllPredictions(userId) {
+            currentUserId = userId;
+            jakeBotPredictions = [];
+            
+            showLoading();
+            
+            try {
+                // Generate for all 10 levels
+                for (let level = 1; level <= 10; level++) {
+                    jakeBotPredictions[level] = generateJakeBotPrediction(userId, level);
+                }
+                
+                console.log('🎯 Predictions generated:', jakeBotPredictions);
+                
+                // Update API display
+                if (apiInfo && apiStatus) {
+                    apiInfo.style.display = 'block';
+                    apiStatus.innerHTML = `<strong>Level 1:</strong> Safe apples: ${jakeBotPredictions[1].join(', ')}`;
+                }
+                
+                showPredictionDisplay();
+                hideLoading();
+                
+                // Show copy button
+                copyPredictionsBtn.style.display = 'inline-flex';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                hideLoading();
+            }
+        }
+
+        function showPredictionDisplay() {
+            const predictionElement = document.getElementById('jakebot-prediction');
+            const predictionText = document.getElementById('prediction-text');
+            
+            predictionElement.style.display = 'block';
+            predictionText.textContent = `🎯 Safe apples highlighted in green`;
+            
+            setTimeout(() => {
+                highlightPredictedApples();
+            }, 100);
+        }
+
+        function highlightPredictedApples() {
+            if (!jakeBotPredictions[currentRowIndex + 1]) return;
+            
+            const safeApples = jakeBotPredictions[currentRowIndex + 1];
+            const apples = document.querySelectorAll('.apple');
+            
+            apples.forEach((apple, index) => {
+                apple.classList.remove('jakebot-prediction');
+                if (safeApples.includes(index)) {
+                    apple.classList.add('jakebot-prediction');
+                }
+            });
+        }
+        
+        // Game functions
+        const eatenApplesPerRow = [1, 1, 1, 1, 2, 2, 2, 3, 3, 4];
+
+        function initGame() {
+            applesState = [];
+            gameStarted = false;
+            currentRowIndex = 0;
+            updateProgressBar();
+            
+            for (let row = 0; row < 10; row++) {
+                const eatenCount = eatenApplesPerRow[row];
+                const rowState = Array(5).fill(false);
+                
+                const eatenPositions = [];
+                while (eatenPositions.length < eatenCount) {
+                    const randomPos = Math.floor(Math.random() * 5);
+                    if (!eatenPositions.includes(randomPos)) {
+                        eatenPositions.push(randomPos);
+                        rowState[randomPos] = true;
+                    }
+                }
+                
+                applesState.push(rowState);
+            }
+            
+            displayStartMessage();
+        }
+        
+        function updateProgressBar() {
+            const progress = ((currentRowIndex + 1) / 10) * 100;
+            gameProgress.style.width = `${progress}%`;
+            currentLevel.textContent = currentRowIndex + 1;
+        }
+        
+        function displayStartMessage() {
+            currentRow.innerHTML = '';
+            startMessage.style.display = 'block';
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            playBtn.innerHTML = '<i class="fas fa-play"></i> Play';
+        }
+        
+        function startGame() {
+            gameStarted = true;
+            startMessage.style.display = 'none';
+            prevBtn.style.display = 'inline-flex';
+            nextBtn.style.display = 'inline-flex';
+            playBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Restart';
+            currentRowIndex = 0;
+            displayCurrentRow();
+        }
+        
+        function displayCurrentRow() {
+            currentRow.innerHTML = '';
+            const rowState = applesState[currentRowIndex];
+            
+            updateProgressBar();
+            
+            // Update API display for current level
+            if (apiInfo && apiStatus && jakeBotPredictions[currentRowIndex + 1]) {
+                apiStatus.innerHTML = `<strong>Level ${currentRowIndex + 1}:</strong> Safe apples: ${jakeBotPredictions[currentRowIndex + 1].join(', ')}`;
+            }
+            
+            for (let col = 0; col < 5; col++) {
+                const apple = document.createElement('div');
+                
+                // CHANGE 1: Check if this apple is in the predictions
+                const isPredictedGood = jakeBotPredictions[currentRowIndex + 1] && 
+                                       jakeBotPredictions[currentRowIndex + 1].includes(col);
+                apple.className = `apple ${isPredictedGood ? 'normal-apple' : 'eaten-apple'}`;
+                
+                // Add apple number
+                const number = document.createElement('div');
+                number.className = 'apple-number';
+                number.textContent = col;
+                apple.appendChild(number);
+                
+                // CHANGE 2: Make predicted good apples glow
+                if (isPredictedGood) {
+                    apple.classList.add('apple-glow');
+                }
+                
+                currentRow.appendChild(apple);
+            }
+            
+            setTimeout(() => {
+                highlightPredictedApples();
+            }, 100);
+            
+            prevBtn.disabled = currentRowIndex === 0;
+            nextBtn.disabled = currentRowIndex === 9;
+        }
+        
+        function restartGame() {
+            initGame();
+            startGame();
+        }
+        
+        function showLoading() {
+            loadingScreen.style.display = 'flex';
+        }
+        
+        function hideLoading() {
+            loadingScreen.style.display = 'none';
+        }
+        
+        // Validate login
+        function validateLogin() {
+            const userId = document.getElementById('user-id').value;
+            const userKey = document.getElementById('user-key').value;
+            
+            if (!/^\d{10}$/.test(userId)) {
+                return false;
+            }
+            
+            if (userKey !== validKeys[0]) {
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Login event
+        loginBtn.addEventListener('click', function() {
+            if (validateLogin()) {
+                showLoading();
+                
+                setTimeout(() => {
+                    loginScreen.style.display = 'none';
+                    gameScreen.style.display = 'block';
+                    
+                    const userId = document.getElementById('user-id').value;
+                    displayUserId.textContent = `ID: ${userId}`;
+                    
+                    generateAllPredictions(userId);
+                    initGame();
+                    
+                }, 1000);
+            } else {
+                errorMessage.style.display = 'block';
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000);
+            }
+        });
+        
+        // Copy predictions to clipboard
+        copyPredictionsBtn.addEventListener('click', function() {
+            if (!currentUserId) {
+                alert('Please login first');
+                return;
+            }
+            
+            let predictionsText = `🎯 JAKEBOT PREDICTIONS\n`;
+            predictionsText += `User ID: ${currentUserId}\n`;
+            predictionsText += `Date: ${new Date().toLocaleDateString()}\n\n`;
+            
+            for (let level = 1; level <= 10; level++) {
+                if (jakeBotPredictions[level]) {
+                    predictionsText += `Level ${level}: Click apples ${jakeBotPredictions[level].join(', ')}\n`;
+                }
+            }
+            
+            predictionsText += `\n📱 Use in app with same User ID\n`;
+            predictionsText += `🌐 More at: https://jakebot.sbs`;
+            
+            navigator.clipboard.writeText(predictionsText).then(() => {
+                copyPredictionsBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    copyPredictionsBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Predictions to Clipboard';
+                }, 2000);
+            });
+        });
+        
+        // Game controls
+        playBtn.addEventListener('click', function() {
+            if (!gameStarted) {
+                startGame();
+            } else {
+                restartGame();
+            }
+        });
+        
+        nextBtn.addEventListener('click', function() {
+            if (currentRowIndex < 9) {
+                currentRowIndex++;
+                displayCurrentRow();
+            }
+        });
+        
+        prevBtn.addEventListener('click', function() {
+            if (currentRowIndex > 0) {
+                currentRowIndex--;
+                displayCurrentRow();
+            }
+        });
+        
+        // Keyboard shortcuts
+        document.getElementById('user-key').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') loginBtn.click();
+        });
+        
+        document.getElementById('user-id').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') loginBtn.click();
+        });
+        
+        // Auto-login for testing
+        const urlParams = new URLSearchParams(window.location.search);
+        const testId = urlParams.get('testId');
+        const testKey = urlParams.get('testKey');
+        
+        if (testId && testKey) {
+            document.getElementById('user-id').value = testId;
+            document.getElementById('user-key').value = testKey;
+            setTimeout(() => loginBtn.click(), 500);
+        }
+        
+        // Console helper
+        window.JakeBot = {
+            getPredictions: () => jakeBotPredictions,
+            getUserId: () => currentUserId,
+            test: (userId = '1234567890') => {
+                document.getElementById('user-id').value = userId;
+                document.getElementById('user-key').value = 'raid';
+                loginBtn.click();
+            }
+        };
+        
+        console.log('🎯 JakeBot loaded! Use window.JakeBot.test() to test.');
+    </script>
+</body>
+</html>
