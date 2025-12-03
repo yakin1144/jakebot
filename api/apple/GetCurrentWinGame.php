@@ -2,31 +2,21 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
-$userId = $_GET['userId'] ?? $_GET['user_id'] ?? '';
+$input = json_decode(file_get_contents('php://input'), true);
+$userId = $input['userId'] ?? 0;
+$actionStep = $input['actionStep'] ?? 1;
 
-// Get user's current balance
-$balanceUrl = "https://jakebot.sbs/game-api.php?action=balance&userId=" . urlencode($userId);
-$balanceData = @file_get_contents($balanceUrl);
-
-if ($balanceData) {
-    $balance = json_decode($balanceData, true);
-    echo json_encode([
-        'success' => true,
+echo json_encode([
+    'success' => true,
+    'data' => [
         'userId' => $userId,
-        'currentBalance' => $balance['coins'] ?? 1000,
-        'currentWin' => 0, // Last win amount
-        'totalWins' => 0,
-        'gamesPlayed' => 0
-    ]);
-} else {
-    // Default response
-    echo json_encode([
-        'success' => true,
-        'userId' => $userId,
-        'currentBalance' => 1000,
-        'currentWin' => 100,
-        'totalWins' => 5,
-        'gamesPlayed' => 10
-    ]);
-}
+        'actionStep' => $actionStep,
+        'currentWin' => 50.0,
+        'totalWin' => 500.0,
+        'balance' => 10500.0,
+        'availableActions' => 5
+    ],
+    'error' => null,
+    'errorCode' => 0
+]);
 ?>
