@@ -1,7 +1,0 @@
-{
-  "buildpacks": [
-    {
-      "url": "https://github.com/vercel-community/php-buildpack"
-    }
-  ]
-}
