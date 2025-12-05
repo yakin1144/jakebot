@@ -4,9 +4,13 @@
     {
       "src": "api/**/*.php",
       "use": "@vercel/php",
-      "config": {
-        "runtime": "php8.1"
-      }
+      "config": { "runtime": "php8.1" }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/api/$1.php"
     }
   ]
 }
