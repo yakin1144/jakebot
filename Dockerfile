@@ -13,8 +13,8 @@ RUN a2enmod rewrite
 RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
 
 # Use Render's PORT environment variable
-RUN echo 'Listen ${PORT:-80}' > /etc/apache2/ports.conf
-RUN sed -i 's/80/${PORT:-80}/g' /etc/apache2/sites-available/000-default.conf
+RUN sed -i "s/80/\${PORT:-80}/g" /etc/apache2/ports.conf
+RUN sed -i "s/80/\${PORT:-80}/g" /etc/apache2/sites-available/000-default.conf
 
 # Start Apache
 CMD ["apache2-foreground"]
