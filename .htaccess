@@ -15,12 +15,12 @@ RewriteRule ^api/v1/fortune/result$ game-api.php [L,QSA]
 RewriteRule ^game/apple-fortune$ game-api.php?action=play [L,QSA]
 
 # User Auth Routes
-RewriteRule ^api/UserAuth/$ game-api.php?action=login [L,QSA]
-RewriteRule ^api/UserAuth/Refresh.php$ game-api.php?action=refresh [L,QSA]
-RewriteRule ^api/UserAuth/Logout.php$ game-api.php?action=logout [L,QSA]
+RewriteRule ^api/UserAuth/$ auth-api.php?action=login [L,QSA]
+RewriteRule ^api/UserAuth/Refresh.php$ auth-api.php?action=refresh [L,QSA]
+RewriteRule ^api/UserAuth/Logout.php$ auth-api.php?action=logout [L,QSA]
 
 # Registration Route
-RewriteRule ^api/Registration/$ game-api.php?action=register [L,QSA]
+RewriteRule ^api/Registration/$ auth-api.php?action=register [L,QSA]
 
 # Balance Route
 RewriteRule ^api/balance/$ game-api.php?action=balance [L,QSA]
