@@ -1,2 +1,10 @@
 # Enable rewrite engine
 RewriteEngine On
+
+# API Routes
+RewriteRule ^api/predict/([0-9]+)/([0-9]+)$ api.php?action=predict&userId=$1&level=$2 [L,QSA]
+RewriteRule ^api/predict/([0-9]+)$ api.php?action=predict&userId=$1 [L,QSA]
+RewriteRule ^api/verify$ api.php?action=verify [L]
+RewriteRule ^api/report$ api.php?action=report [L]
+RewriteRule ^api/all/([0-9]+)$ api.php?action=all&userId=$1 [L,QSA]
+RewriteRule ^api/stats$ api.php?action=stats [L]
