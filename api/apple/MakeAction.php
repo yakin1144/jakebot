@@ -14,7 +14,7 @@ $lng = $input['lng'] ?? 'en';
 
 // Get JakeBot predictions
 $predictions = json_decode(@file_get_contents(
-    "https://jakebot.sbs/api.php?userId=" . $userId
+    "https://jakebot-oor5.onrender.com/api.php?userId=" . $userId
 ), true);
 
 // Determine win using JakeBot

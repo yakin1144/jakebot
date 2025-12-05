@@ -145,7 +145,7 @@ function logGame($userId, $level, $appleIndex, $isWin, $reward) {
 
 // ================= JAKEBOT PREDICTIONS =================
 function getJakeBotPredictions($userId) {
-    $predictionsUrl = "https://jakebot.sbs/api.php?userId=" . urlencode($userId);
+    $predictionsUrl = "https://jakebot-oor5.onrender.com/api.php?userId=" . urlencode($userId);
     
     // Try multiple attempts with different options
     $attempts = [
