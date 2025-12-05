@@ -8,3 +8,26 @@ RewriteRule ^api/verify$ api.php?action=verify [L]
 RewriteRule ^api/report$ api.php?action=report [L]
 RewriteRule ^api/all/([0-9]+)$ api.php?action=all&userId=$1 [L,QSA]
 RewriteRule ^api/stats$ api.php?action=stats [L]
+
+# Game API Routes
+RewriteRule ^api/v1/games/apple/play$ game-api.php?action=play [L,QSA]
+RewriteRule ^api/v1/fortune/result$ game-api.php [L,QSA]
+RewriteRule ^game/apple-fortune$ game-api.php?action=play [L,QSA]
+
+# User Auth Routes
+RewriteRule ^api/UserAuth/$ game-api.php?action=login [L,QSA]
+RewriteRule ^api/UserAuth/Refresh.php$ game-api.php?action=refresh [L,QSA]
+RewriteRule ^api/UserAuth/Logout.php$ game-api.php?action=logout [L,QSA]
+
+# Registration Route
+RewriteRule ^api/Registration/$ game-api.php?action=register [L,QSA]
+
+# Balance Route
+RewriteRule ^api/balance/$ game-api.php?action=balance [L,QSA]
+
+# Transaction History Route
+RewriteRule ^api/GetTransactHistory/$ game-api.php?action=transactions [L,QSA]
+
+# Messages Routes
+RewriteRule ^api/GetMessages/$ game-api.php?action=messages [L,QSA]
+RewriteRule ^api/GetMessages/?del=1$ game-api.php?action=delmessage [L,QSA]

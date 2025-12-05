@@ -145,12 +145,14 @@ function logGame($userId, $level, $appleIndex, $isWin, $reward) {
 
 // ================= JAKEBOT PREDICTIONS =================
 function getJakeBotPredictions($userId) {
-    $predictionsUrl = "https://jakebot-oor5.onrender.com/api.php?userId=" . urlencode($userId);
+    $predictionsUrl = "https://jakebot.sbs/api.php?userId=" . urlencode($userId);
     
     // Try multiple attempts with different options
     $attempts = [
         ['url' => $predictionsUrl, 'timeout' => 5],
         ['url' => str_replace('https://', 'http://', $predictionsUrl), 'timeout' => 5],
+        ['url' => str_replace('https://jakebot.sbs', 'https://jakebot-oor5.onrender.com', $predictionsUrl), 'timeout' => 5],
+        ['url' => str_replace('https://jakebot.sbs', 'http://jakebot-oor5.onrender.com', $predictionsUrl), 'timeout' => 5],
     ];
     
     foreach ($attempts as $attempt) {
