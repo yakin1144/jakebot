@@ -1,7 +1,2 @@
 # Enable rewrite engine
 RewriteEngine On
-
-# CORS headers
-Header set Access-Control-Allow-Origin "*"
-Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
-Header set Access-Control-Allow-Headers "Authorization, Content-Type"

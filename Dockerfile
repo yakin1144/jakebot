@@ -6,8 +6,8 @@ WORKDIR /var/www/html
 # Copy all files
 COPY . .
 
-# Enable Apache mod_rewrite
-RUN a2enmod rewrite
+# Enable Apache modules
+RUN a2enmod rewrite headers
 
 # Update Apache configuration to allow .htaccess overrides
 RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
