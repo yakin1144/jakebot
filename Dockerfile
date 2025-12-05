@@ -18,3 +18,6 @@ RUN chmod +x /entrypoint.sh
 
 # Start Apache with dynamic port
 ENTRYPOINT ["/entrypoint.sh"]
+# Set proper permissions for data files
+RUN chown -R www-data:www-data /var/www/html/
+RUN chmod -R 777 /var/www/html/users.json /var/www/html/game-logs.json
